@@ -4,6 +4,6 @@ type Props = {}
 
 export default function Features({}: Props) {
   return (
-    <div className='h-screen snap-center bg-red-500'>Features</div>
+    <div className='h-screen snap-center bg-[#121212]'>Features</div>
   )
 }

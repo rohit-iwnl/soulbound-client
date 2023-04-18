@@ -2,10 +2,14 @@ import { Skull } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { BrowserView, isMobile, MobileView } from "react-device-detect";
+import { useContext } from "react";
+import { TransactionContext } from "@/context/TransactionContext";
 
 type Props = {};
 
 export default function Header({}: Props) {
+  const {currentAccount,connectWallet} = useContext(TransactionContext)
+
   return (
     <motion.div
       initial={{
@@ -66,13 +70,13 @@ export default function Header({}: Props) {
       </div>
 
       {/* Login */}
-      <div>
-        <Link href="#signup">
+      {!currentAccount && (<div>
+        <Link href="#signup" onClick={connectWallet}>
           <div className="rounded-xl bg-[#6648fc] font-bold py-2 px-3">
             Connect Wallet
           </div>
         </Link>
-      </div>
+      </div>)}
     </motion.div>
   );
 }

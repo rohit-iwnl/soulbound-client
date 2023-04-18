@@ -11,13 +11,6 @@
   border: 1px solid rgba(255, 255, 255, 0);
 }
 
-.hero-background{
-    background-image: url("../../assets/hero/gradient_hero.svg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
-}
 
 .eth-card {
   background-color:#a099ff;
@@ -33,4 +26,10 @@
 
 .hero-card{
   background: linear-gradient(to right, #434343 0%, black 100%);
+}
+
+.hero{
+  background: rgb(160,0,207);
+  background: linear-gradient(25deg, rgba(160,0,207,1) 5%, rgba(207,0,163,1) 9%, rgba(255,29,116,1) 16%, rgba(255,137,147,1) 37%, rgba(0,0,0,1) 62%); 
+
 }
