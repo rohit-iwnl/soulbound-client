@@ -8,7 +8,10 @@ import { TransactionContext } from "@/context/TransactionContext";
 type Props = {};
 
 export default function Header({}: Props) {
-  const {currentAccount,connectWallet} = useContext(TransactionContext)
+  const { currentAccount, connectWallet, connectCounter } =
+    useContext(TransactionContext);
+
+    const check='test';
 
   return (
     <motion.div
@@ -29,7 +32,7 @@ export default function Header({}: Props) {
     >
       {/* Logo */}
       <div className="flex cursor-pointer items-center justify-center space-x-1">
-        <Link href="#hero">
+        <Link href="/#hero" scroll={false}>
           <Skull color="white" height={36} width={36} />
         </Link>
         <Link href="#hero" className="hidden sm:block">
@@ -70,13 +73,20 @@ export default function Header({}: Props) {
       </div>
 
       {/* Login */}
-      {!currentAccount && (<div>
-        <Link href="#signup" onClick={connectWallet}>
-          <div className="rounded-xl bg-[#6648fc] font-bold py-2 px-3">
-            Connect Wallet
-          </div>
-        </Link>
-      </div>)}
+        <div className="overflow-clip">
+          <Link href="#signup" onClick={connectWallet}>
+            {connectCounter == 0 && (
+              <div className="rounded-xl bg-[#6648fc] font-bold py-2 px-3">
+                Connect Wallet
+              </div>
+            )}
+            {connectCounter != 0 && (
+              <div className="rounded-xl bg-[#6648fc] font-bold py-2 px-3 w-">
+                <p className="overflow-ellipsis">{currentAccount}</p>
+              </div>
+            )}
+          </Link>
+        </div>
     </motion.div>
   );
 }
