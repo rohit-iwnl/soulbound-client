@@ -9,7 +9,7 @@ import { TransactionContext } from "@/context/TransactionContext";
 type Props = {};
 
 export default function Hero({}: Props) {
-  const { connectWallet,connectCounter } = useContext(TransactionContext);
+  const { connectWallet,connectCounter,formData,handleChange,setFormData } = useContext(TransactionContext);
 
   const [text, count] = useTypewriter({
     words: [
