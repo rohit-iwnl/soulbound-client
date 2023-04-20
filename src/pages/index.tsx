@@ -2,6 +2,7 @@ import Head from "next/head";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
+import Student from "../components/Student";
 
 export default function Home() {
   return (
@@ -21,6 +22,9 @@ export default function Home() {
       {/* Features */}
       <section id="features">
         <Features />
+      </section>
+      <section id="student">
+        <Student />
       </section>
     </div>
   );

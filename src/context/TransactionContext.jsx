@@ -19,6 +19,7 @@ const getEthereumContract = () => {
     provider,
     signer,transactionContract
   })
+  return transactionContract;
 };
 
 export const TransactionProvider = ({ children }) => {
@@ -26,8 +27,14 @@ export const TransactionProvider = ({ children }) => {
   const [connectCounter, setConnectCounter] = useState(0);
   const [formData,setFormData] = useState({addressTo:'' , message:'', keyword:''});
 
+  const [studentData,setStudentData] = useState({jsonURI:'',addressFrom:'',addressCollege:''});
+
   const handleChange = (e,name) =>{
     setFormData((prevState) => ({...prevState,[name]:e.target.value}));
+  }
+
+  const handleStudent = (e,name) =>{
+    setStudentData((prevState) => ({...prevState,[name]:e.target.value}));
   }
 
 
@@ -80,13 +87,17 @@ export const TransactionProvider = ({ children }) => {
       if(!ethereum) return alert("Please install metamask");
       const {addressTo,message,keyword} = formData;
       const transactionContract = getEthereumContract();
+      const parsedAmount = ethers.utils.parseEther("0")
+      console.log(parsedAmount);
+      console.log(addressTo)
 
       await ethereum.request({
         method:'eth_sendTransaction',
         params:[{
           from:currentAccount,
-          to:addressTo,
-          gas:'0x5208',
+          to:contractAddress,
+          gas:'0x186A0',
+          value: parsedAmount._hex,
         }]
       });
 
@@ -97,7 +108,31 @@ export const TransactionProvider = ({ children }) => {
 
     } catch (error) {
       console.log(error);
-      throw new Error("No ethereum object found");
+    }
+  }
+
+  const claimDegree = async () =>{
+    try {
+      if(!ethereum) return alert("Please install metamask");
+      const {jsonURI,addressFrom,addressCollege} = studentData;
+      const transactionContract = getEthereumContract();
+
+      await ethereum.request({
+        method:'eth_sendTransaction',
+        params:[{
+          from:addressFrom,
+          to:contractAddress,
+          gas:'0x5208',
+        }]
+      });
+
+      const transactionHash = await transactionContract.claimDegree(jsonURI);
+      console.log("Sending")
+      await transactionHash.wait();
+      console.log(`Vetri - ${transactionHash.hash}`);
+
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -111,7 +146,7 @@ export const TransactionProvider = ({ children }) => {
 //   Return fuction and passing all values
   return (
     <TransactionContext.Provider
-      value={{ connectWallet, connectCounter, currentAccount,formData,setFormData,handleChange,sendTransaction}}
+      value={{ connectWallet, connectCounter, currentAccount,formData,setFormData,handleChange,handleStudent,sendTransaction,claimDegree,studentData,setStudentData}}
     >
       {children}
     </TransactionContext.Provider>

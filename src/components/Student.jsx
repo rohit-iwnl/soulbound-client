@@ -13,19 +13,18 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
   />
 );
 
-export default function Features() {
-  const { connectWallet, connectCounter, formData, handleChange, sendTransaction } =
+export default function Student() {
+  const { connectWallet, connectCounter, formData, handleChange,handleStudent, sendTransaction,studentData,setStudentData,claimDegree } =
     useContext(TransactionContext);
 
   const handleSubmit =(e) =>{
-    const {addressTo,message,keyword} = formData;
-    console.log(addressTo);
+    const {jsonURI,addressFrom,addressCollege} = studentData;
 
     e.preventDefault();
 
-    if(!addressTo || !message || !keyword)return;
+    if(!jsonURI||!addressFrom)return;
 
-    sendTransaction();
+    claimDegree();
 
     };
 
@@ -33,32 +32,26 @@ export default function Features() {
     <div className="h-screen snap-center bg-[#121212]">
       <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center">
         <Input
-          placeholder="Address To"
-          name="addressTo"
+          placeholder="JSON URI"
+          name="jsonURI"
           type="text"
-          handleChange={handleChange}
+          handleChange={handleStudent}
         />
         <Input
-          placeholder="Amount (ETH)"
-          name="amount"
-          type="number"
-          handleChange={handleChange}
-        />
-        <Input
-          placeholder="Keyword (Gif)"
-          name="keyword"
+          placeholder="Address From"
+          name="addressFrom"
           type="text"
-          handleChange={handleChange}
+          handleChange={handleStudent}
         />
-        <Input
-          placeholder="Enter Message"
-          name="message"
+                <Input
+          placeholder="Address College"
+          name="addressCollege"
           type="text"
-          handleChange={handleChange}
+          handleChange={handleStudent}
         />
       </div>
       <div>
-        <Link onClick={handleSubmit} href="#features">Send now</Link>
+        <Link onClick={handleSubmit} href="#">Send now</Link>
       </div>
     </div>
   );
