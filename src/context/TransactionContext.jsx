@@ -85,7 +85,7 @@ export const TransactionProvider = ({ children }) => {
   const sendTransaction = async () =>{
     try {
       if(!ethereum) return alert("Please install metamask");
-      const {addressTo,message,keyword} = formData;
+      const {addressTo} = formData;
       const transactionContract = getEthereumContract();
       const parsedAmount = ethers.utils.parseEther("0")
       console.log(parsedAmount);
@@ -114,20 +114,21 @@ export const TransactionProvider = ({ children }) => {
   const claimDegree = async () =>{
     try {
       if(!ethereum) return alert("Please install metamask");
-      const {jsonURI,addressFrom,addressCollege} = studentData;
+      const {jsonURI} = studentData;
+      const ipfsdata = "https://ipfs.io/ipfs/"+jsonURI;
       const transactionContract = getEthereumContract();
 
       await ethereum.request({
         method:'eth_sendTransaction',
         params:[{
-          from:addressFrom,
+          from:currentAccount,
           to:contractAddress,
           gas:'0x5208',
         }]
       });
 
-      const transactionHash = await transactionContract.claimDegree(jsonURI);
-      console.log("Sending")
+      const transactionHash = await transactionContract.claimDegree(ipfsdata);
+      console.log("Claiming")
       await transactionHash.wait();
       console.log(`Vetri - ${transactionHash.hash}`);
 

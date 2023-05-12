@@ -46,28 +46,28 @@ export default function Header({}: Props) {
       <div>
         <ul className="hidden list-none font-medium md:flex space-x-6 md:space-x-3">
           <Link
-            href="#features"
-            className="hover:font-bold rounded-full hover:px-4 hover:transition duration-200 hover:bg-gradient-to-r from-[#f77d8b] to-[#6648FC]"
+            href="#feat"
+            className="hover:font-bold rounded-full hover:px-4 hover:transition duration-200 hover:bg-gradient-to-r from-[#7d7d7d] to-[#4e4e4e]"
           >
             Features
           </Link>
           <Link
-            href="#pricing"
-            className="hover:font-bold rounded-full hover:px-4 hover:transition duration-200 hover:bg-gradient-to-r from-[#F77D8B] to-[#6648FC]"
-          >
-            Pricing
-          </Link>
-          <Link
-            href="#institutions"
-            className="hover:font-bold rounded-full hover:px-4 hover:transition duration-200 hover:bg-gradient-to-r from-[#F77D8B] to-[#6648FC]"
-          >
-            Institutions
-          </Link>
-          <Link
             href="#about"
-            className="hover:font-bold rounded-full hover:px-4 hover:transition duration-200 hover:bg-gradient-to-r from-[#F77D8B] to-[#6648FC]"
+            className="hover:font-bold rounded-full hover:px-4 hover:transition duration-200 hover:bg-gradient-to-r from-[#7d7d7d] to-[#4e4e4e]"
           >
-            About Us
+            About us
+          </Link>
+          <Link
+            href="#send"
+            className="hover:font-bold rounded-full hover:px-4 hover:transition duration-200 hover:bg-gradient-to-r from-[#7d7d7d] to-[#4e4e4e]"
+          >
+            Send
+          </Link>
+          <Link
+            href="#claim"
+            className="hover:font-bold rounded-full hover:px-4 hover:transition duration-200 hover:bg-gradient-to-r from-[#7d7d7d] to-[#4e4e4e]"
+          >
+            Claim
           </Link>
         </ul>
       </div>

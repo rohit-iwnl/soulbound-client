@@ -14,19 +14,27 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 );
 
 export default function Student() {
-  const { connectWallet, connectCounter, formData, handleChange,handleStudent, sendTransaction,studentData,setStudentData,claimDegree } =
-    useContext(TransactionContext);
+  const {
+    connectWallet,
+    connectCounter,
+    formData,
+    handleChange,
+    handleStudent,
+    sendTransaction,
+    studentData,
+    setStudentData,
+    claimDegree,
+  } = useContext(TransactionContext);
 
-  const handleSubmit =(e) =>{
-    const {jsonURI,addressFrom,addressCollege} = studentData;
+  const handleSubmit = (e) => {
+    const { jsonURI, addressFrom } = studentData;
 
     e.preventDefault();
 
-    if(!jsonURI||!addressFrom)return;
+    if (!jsonURI || !addressFrom) return;
 
     claimDegree();
-
-    };
+  };
 
   return (
     <div className="h-screen flex flex-col justify-center items-center snap-center bg-[#121212]">
@@ -45,7 +53,13 @@ export default function Student() {
         />
       </div>
       <div>
-        <Link onClick={handleSubmit} href="#" className="text-white border border-red-300 p-8 rounded-xl flex">Claim Degree</Link>
+        <Link
+          onClick={handleSubmit}
+          href="#"
+          className="text-white border border-red-300 p-8 rounded-xl flex"
+        >
+          Claim Degree
+        </Link>
       </div>
     </div>
   );
