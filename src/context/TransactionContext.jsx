@@ -27,7 +27,7 @@ export const TransactionProvider = ({ children }) => {
   const [connectCounter, setConnectCounter] = useState(0);
   const [formData,setFormData] = useState({addressTo:'' , message:'', keyword:''});
 
-  const [studentData,setStudentData] = useState({jsonURI:'',addressFrom:'',addressCollege:''});
+  const [studentData,setStudentData] = useState({jsonURI:'',addressFrom:''});
 
   const handleChange = (e,name) =>{
     setFormData((prevState) => ({...prevState,[name]:e.target.value}));

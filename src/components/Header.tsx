@@ -37,7 +37,7 @@ export default function Header({}: Props) {
         </Link>
         <Link href="#hero" className="hidden sm:block">
           <span className="text-sm md:text-sm lg:text-lg font-bold ">
-            Sell Your Soul
+            Soul Bound
           </span>
         </Link>
       </div>

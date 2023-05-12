@@ -29,7 +29,7 @@ export default function Student() {
     };
 
   return (
-    <div className="h-screen snap-center bg-[#121212]">
+    <div className="h-screen flex flex-col justify-center items-center snap-center bg-[#121212]">
       <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center">
         <Input
           placeholder="JSON URI"
@@ -43,15 +43,9 @@ export default function Student() {
           type="text"
           handleChange={handleStudent}
         />
-                <Input
-          placeholder="Address College"
-          name="addressCollege"
-          type="text"
-          handleChange={handleStudent}
-        />
       </div>
       <div>
-        <Link onClick={handleSubmit} href="#">Send now</Link>
+        <Link onClick={handleSubmit} href="#" className="text-white border border-red-300 p-8 rounded-xl">Claim Degree</Link>
       </div>
     </div>
   );

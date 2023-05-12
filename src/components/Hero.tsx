@@ -55,7 +55,7 @@ export default function Hero({}: Props) {
           <div className="flex items-center justify-center bottom-2">
             {/* Explore button */}
             <div className="flex-row flex  bg-[#121212] rounded-3xl font-bold text-xl p-4 items-center justify-center">
-              <Link href="#features">Sell your soul</Link>
+              <Link href="#features">Explore</Link>
               <ChevronsDown />
             </div>
           </div>

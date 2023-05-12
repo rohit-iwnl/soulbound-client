@@ -30,7 +30,7 @@ export default function Features() {
     };
 
   return (
-    <div className="h-screen snap-center bg-[#121212]">
+    <div className="h-screen flex flex-col justify-center items-center snap-center bg-[#121212]">
       <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center">
         <Input
           placeholder="Address To"
@@ -58,7 +58,7 @@ export default function Features() {
         />
       </div>
       <div>
-        <Link onClick={handleSubmit} href="#features">Send now</Link>
+        <Link onClick={handleSubmit} href="#features" className="text-white border border-red-400 rounded-2xl p-8">Send now</Link>
       </div>
     </div>
   );
