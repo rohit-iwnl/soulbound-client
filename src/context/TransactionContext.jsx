@@ -25,7 +25,7 @@ const getEthereumContract = () => {
 export const TransactionProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState();
   const [connectCounter, setConnectCounter] = useState(0);
-  const [formData,setFormData] = useState({addressTo:'' , message:'', keyword:''});
+  const [formData,setFormData] = useState({addressTo:''});
 
   const [studentData,setStudentData] = useState({jsonURI:'',addressFrom:''});
 

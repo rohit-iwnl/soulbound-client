@@ -32,20 +32,20 @@ export default function Student() {
     <div className="h-screen flex flex-col justify-center items-center snap-center bg-[#121212]">
       <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center">
         <Input
-          placeholder="JSON URI"
+          placeholder="Content Identifier Code"
           name="jsonURI"
           type="text"
           handleChange={handleStudent}
         />
         <Input
-          placeholder="Address From"
+          placeholder="Address of Student"
           name="addressFrom"
           type="text"
           handleChange={handleStudent}
         />
       </div>
       <div>
-        <Link onClick={handleSubmit} href="#" className="text-white border border-red-300 p-8 rounded-xl">Claim Degree</Link>
+        <Link onClick={handleSubmit} href="#" className="text-white border border-red-300 p-8 rounded-xl flex">Claim Degree</Link>
       </div>
     </div>
   );

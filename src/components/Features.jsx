@@ -33,26 +33,8 @@ export default function Features() {
     <div className="h-screen flex flex-col justify-center items-center snap-center bg-[#121212]">
       <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center">
         <Input
-          placeholder="Address To"
+          placeholder="Address of Student"
           name="addressTo"
-          type="text"
-          handleChange={handleChange}
-        />
-        <Input
-          placeholder="Amount (ETH)"
-          name="amount"
-          type="number"
-          handleChange={handleChange}
-        />
-        <Input
-          placeholder="Keyword (Gif)"
-          name="keyword"
-          type="text"
-          handleChange={handleChange}
-        />
-        <Input
-          placeholder="Enter Message"
-          name="message"
           type="text"
           handleChange={handleChange}
         />
