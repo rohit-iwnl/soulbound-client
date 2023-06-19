@@ -1,0 +1,15 @@
+Hello Team,
+
+I have logged into the cluster and can see that currently the edge is in OK state.
+
+On further investigation, I found that the open-VM-tools package responsible for running the service vmtoolsd is consuming high memory which caused the edge to go down.
+This issue is already worked by our Rubrik Engineering team and the permeant fix is now available in CDM version 8.1.
+
+If it takes time to upgrade the cluster to 8.1 and above, In the meantime, the Engineering team has also provided us with a preventive fix that can be applied on the cluster.
+The fix just performs a restart of the open-VM-tools service once a day to reclaim the extra memory occupied by the service using a cron job.
+
+Please let us know if we can go ahead with applying the above fix to the cluster or will you be able to upgrade the cluster to the fixed version directly.
+
+With Best Regards,
+Rohit Manivel
+CSE at Rubrik

@@ -19,7 +19,6 @@ export default function Features() {
 
   const handleSubmit =(e) =>{
     const {addressTo,message,keyword} = formData;
-    console.log(addressTo);
 
     e.preventDefault();
 

@@ -25,9 +25,7 @@ function Sending() {
 
   const handleSubmit = (e) => {
     const { addressTo } = formData;
-    console.log(addressTo);
     const ipfsdata = "https://ipfs.io/ipfs/" + addressTo;
-    console.log(ipfsdata);
 
     e.preventDefault();
 

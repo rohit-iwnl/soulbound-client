@@ -1,0 +1,86 @@
+-Node is added to the cluster on 6th.
+-Looks like from then node is going down and from the logs looks like partition full caused the issue.
+2023-06-06 11:02:11|5|cluster init
+2023-06-06 11:05:48|1|Bootstrap successful
+2023-06-07 00:09:45|2|Stale status timestamp
+2023-06-07 01:36:27|1|Node revived from BAD state
+2023-06-09 02:39:50|2|Stale status timestamp
+2023-06-09 04:06:40|1|Node revived from BAD state
+2023-06-11 12:05:42|2|Stale status timestamp
+2023-06-11 13:32:48|1|Node revived from BAD state
+2023-06-12 00:27:41|2|Stale status timestamp
+2023-06-12 01:54:39|1|Node revived from BAD state
+2023-06-15 22:00:02|2|Stale status timestamp
+2023-06-15 23:26:51|1|Node revived from BAD state
+
+-> no smaps present
+
+-> a lot of disk space errors found in syslog
+2023-06-10T07:39:30.198429+00:00 <30> chisel.sh 3204  multilog: warning: unable to write to /var/log/chisel/current, pausing: out of disk space
+2023-06-10T07:39:30.686273+00:00 <30> jaeger_agent.sh 2937  multilog: warning: unable to write to /var/log/jaeger-agent/current, pausing: out of disk space
+2023-06-10T07:39:31.056308+00:00 <30> run 4396  multilog: warning: unable to write to /tmp/node-monitor/current, pausing: out of disk space
+2023-06-10T07:39:41.098175+00:00 <30> run 4396  multilog: warning: unable to write to /tmp/node-monitor/current, pausing: out of disk space
+2023-06-10T07:39:43.946726+00:00 <30> run 4425  multilog: warning: unable to write to /tmp/key-wrapper/current, pausing: out of disk space
+
+-OS partition was 100% and we deleted few crash files to recover the node. Node is reporting healthy currently but OS partition usage is still high.
+/dev/mapper/root-os                                      32G   30G  585M  99% /
+
+->rubrik cdm images still seem to persists in .auto_install folder
+-rw-r--r-- 1 root   root   4.6G Jun  6 10:08 /opt/rubrik/software/rubrik-image-8.0.2-p1-22576.tar.gz
+-rw-r--r-- 1 root   root   1.8G Jun  6 10:43 /opt/rubrik/software/rubrik-8.0.2-p1-22576_HP1040632.tar.gz
+-r-xr-xr-x 1 ubuntu ubuntu 748M Jan 11 20:26 /home/rkcluster/.auto-install/rubrik-8.0.2-p1-22576_HP1040632/src/java/sd/target/sd-0.1.jar
+
+-This cluster is running on HP version - 8.0.2-p1-22576_HP1040632.
+8.0.2-p1-22576_HP1040632
+
+-auto_install directory is taking 4.7 GB, this directory is not present on other nodes of the cluster. Looks like this was created during auto install process while joining the node to the cluster
+rksupport@RVMHM222S008767:/home/rkcluster/.auto-install$ sudo du -hx --max-depth=1 | sort -rh
+4.7G	./rubrik-8.0.2-p1-22576_HP1040632
+4.7G	.
+
+ rksupport@RVMHM222S008767:/home/rkcluster$ sudo du -hx --max-depth=1 . | sort -h
+4.0K    ./.cache
+4.0K    ./.docker
+8.0K    ./.gnupg
+8.0K    ./.ssh
+32K     ./.upgrade
+4.7G    .
+4.7G    ./.auto-install
+
+->there was a crash file taking nearly 1gb, we deleted it and still root-os came up to 99%
+total 1009M
+drwxr-xr-x 4 root root  4.0K Jun 16 00:00 ..
+-rw------- 1 root root 1012M Jun 16 00:02 dump-incomplete
+-r-------- 1 root root     0 Jun 16 00:02 vmcore-incomplete
+drwxr-xr-x 2 root root  4.0K Jun 16 00:02 .
+
+-Observed similar behavior on the second cluster cluster with HP present where node was replaced and new node was joined back yesterday. We have same issue in the other cluster as well but it's not seen on the cluster without HP.
+Cluster UUID: 34db2d29-4f38-496d-854a-5c55936c9f65
+Cluster Tag: TDCRUBU1
+Cluster version: 8.0.1-p1-22135_HP1102731
+"TDC" rksupport@RVMHM214S006565:~$ sudo du -hx --max-depth=1 /home/rkcluster/.auto-install| sort -h
+4.8G	/home/rkcluster/.auto-install
+4.8G	/home/rkcluster/.auto-install/rubrik-8.0.1-p1-22135_HP1102731
+"TDC" rksupport@RVMHM214S006565:~$
+
+"TDC" rksupport@RVMHM214S006565:~$ sudo find / -xdev -size +100M | xargs ls -lha
+ls: cannot access '/root/backup_agent_home/usr/lib/jvm/java-11-openjdk-amd64/lib/modules': Permission denied
+-r-xr-xr-x 1 ubuntu ubuntu 747M Mar 29 07:13 /home/rkcluster/.auto-install/rubrik-8.0.1-p1-22135_HP1102731/src/java/sd/target/sd-0.1.jar
+-rw-r--r-- 1 root   root   1.8G Jun 15 06:36 /opt/rubrik/software/rubrik-8.0.1-p1-22135_HP1102731.tar.gz
+-rw-r--r-- 1 root   root   4.5G Jun 15 06:03 /opt/rubrik/software/rubrik-image-8.0.1-p1-22135.tar.gz
+-r-xr-xr-x 1 root   root   747M Jun 15 06:41 /opt/rubrik/src/java/sd/target/sd-0.1.jar
+-rwxr-xr-x 1 root   root   111M Jun 16  2022 /usr/bin/kubelet
+-rw-r--r-- 1 root   root   136M Jul 22  2022 /usr/lib/jvm/java-11-openjdk-amd64/lib/modules
+-rwxr-xr-x 1 ubuntu ubuntu 122M Feb 28  2022 /usr/local/bin/cockroach-v19.1.9-54-gd6272ab.linux-amd64/cockroach
+-rwxr-xr-x 1 ubuntu ubuntu 143M Apr 22  2022 /usr/local/bin/cockroach-v19.2.12-5-g862024b0bb.linux-amd64/cockroach
+-rwxr-xr-x 1 ubuntu ubuntu 151M Apr 21  2022 /usr/local/bin/cockroach-v20.1.17-14-g146c69a178.linux-amd64/cockroach
+-rwxr-xr-x 1 ubuntu ubuntu 192M Apr 22  2022 /usr/local/bin/cockroach-v20.2.19-2-g5bb921ee02.linux-amd64/cockroach
+-rwxr-xr-x 1 ubuntu ubuntu 178M Apr 22  2022 /usr/local/bin/cockroach-v21.1.16-14-g72d30f262c.linux-amd64/cockroach
+-rwxr-xr-x 1 ubuntu ubuntu 210M Sep 25  2022 /usr/local/bin/cockroach-v21.2.12-20-g91a6c2a166.linux-amd64/cockroach
+-rw-rw-r-- 1 ubuntu ubuntu 662M Oct  8  2022 /var/cache/envoy/envoy-proxy-base.tar.gz
+-rw-rw-r-- 1 ubuntu ubuntu 220M Jul 12  2022 /var/cache/kubernetes/kube-images.tar
+-r-xr-xr-x 1 ubuntu ubuntu 747M Oct  8  2022 /var/lib/rubrik/hp_backup/src/java/sd/target/sd-0.1.jar
+-rwxr-xr-x 1 root   root   1.1G Oct  8  2022 /var/lib/rubrik/uml/uml-root-xenial-prepared
+
+
+

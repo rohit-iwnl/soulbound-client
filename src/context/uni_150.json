@@ -1,20 +1,19 @@
 {
-  "name": "University Degree",
   "image": "https://ipfs.io/ipfs/QmQhCaa1CWZdrZoqjbFCNEaH693bPcRCL6QT9xnTUF9MJ1",
 
-  "description": "An award awarded by New Horizon College of Engineering signifying that the recipient has completed a course of study",
+  "description": "An award awarded by New Horizon College of Engineering signifying that the student has completed a course of study",
 
   "attributes": [
     {
       "trait_type": "Name",
 
-      "value": "Tejashwin U"
+      "value": "SJ Kennith"
     },
 
     {
       "trait_type": "USN",
 
-      "value": "1NH19CS238"
+      "value": "1NH19CS152"
     },
 
     {
@@ -41,6 +40,13 @@
       "trait_type": "Total no. of backlogs",
 
       "value": "0"
+    },
+    {
+      "trait_type": "Credits Earned",
+
+      "value": 172,
+
+      "max_value": 172
     }
   ]
 }

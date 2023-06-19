@@ -6,7 +6,6 @@ import { contractABI, contractAddress } from "../utils/constants";
 export const TransactionContext = React.createContext();
 
 const getEthereumContract = () => {
-  console.log("test inside")
   const provider = new ethers.providers.Web3Provider(ethereum);
   const signer = provider.getSigner();
   const transactionContract = new ethers.Contract(
@@ -15,10 +14,7 @@ const getEthereumContract = () => {
     signer
   );
 
-  console.log({
-    provider,
-    signer,transactionContract
-  })
+
   return transactionContract;
 };
 
@@ -72,7 +68,6 @@ export const TransactionProvider = ({ children }) => {
           return alert("Wallet Connected");
         } else if (connectCounter >= 1) {
           getEthereumContract();
-          console.log("test outside")
           setConnectCounter(connectCounter + 1);
           return alert("Wallet already connected");
         }
@@ -88,8 +83,6 @@ export const TransactionProvider = ({ children }) => {
       const {addressTo} = formData;
       const transactionContract = getEthereumContract();
       const parsedAmount = ethers.utils.parseEther("0")
-      console.log(parsedAmount);
-      console.log(addressTo)
 
       await ethereum.request({
         method:'eth_sendTransaction',
@@ -102,9 +95,7 @@ export const TransactionProvider = ({ children }) => {
       });
 
       const transactionHash = await transactionContract.issueDegree(addressTo);
-      console.log("Sending")
       await transactionHash.wait();
-      console.log(`Vetri - ${transactionHash.hash}`);
 
     } catch (error) {
       console.log(error);
@@ -128,9 +119,7 @@ export const TransactionProvider = ({ children }) => {
       });
 
       const transactionHash = await transactionContract.claimDegree(ipfsdata);
-      console.log("Claiming")
       await transactionHash.wait();
-      console.log(`Vetri - ${transactionHash.hash}`);
 
     } catch (error) {
       console.log(error);

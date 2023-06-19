@@ -14,7 +14,7 @@ export default function Home() {
     <div className="bg-[#121212] h-screen scroll-smooth snap-y snap-mandatory overflow-scroll z-0">
       {/* Head */}
       <Head>
-        <title>Sell your Soul</title>
+        <title>Soul Bound</title>
       </Head>
 
       {/* Header */}

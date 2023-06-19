@@ -1,0 +1,218 @@
+Cluster UUID:a1c61d0a-e9b8-4286-8494-c2c0b307becc
+
+
+Support Analysis:
+*****************************
+==============
+hw_health seems fine for all the nodes in cluster:
+RVMHM196S005824 | CHANGED | rc=0 >>
+FRU Replacement Summary:
+All FRUS in the node are healthy.
+
+RVMHM196S005637 | CHANGED | rc=0 >>
+FRU Replacement Summary:
+All FRUS in the node are healthy.
+
+RVMHM196S005642 | CHANGED | rc=0 >>
+FRU Replacement Summary:
+All FRUS in the node are healthy.
+
+RVMHM196S005635 | CHANGED | rc=0 >>
+FRU Replacement Summary:
+All FRUS in the node are healthy.
+==============
+node went down twice today and revived back automatically
+22023-05-25 03:49:45|2|Stale status timestamp
+2023-05-25 03:57:50|1|Node revived from BAD state
+2023-05-25 04:09:51|2|Stale status timestamp
+2023-05-25 04:29:10|1|Node revived from BAD state
+
+Utpime:2023-04-04 12:14:02
+==============
+rksvstat shows multiple services restarting:
+Telegraf(39686): 4404554 seconds
+InfluxGraph(1843648): 52260 seconds
+Chisel(930165): 29419 seconds
+job-fetcher(1086512): 28164 seconds
+replication(1086599): 28163 seconds
+sdfs(1086228): 28165 seconds
+snapshot(1140393): 27492 seconds
+cdp-metadata-service(1583399): 24110 seconds
+===============================
+crc errors are not reported on both the ports(eth2 and eth3):
+rx_crc_errors_phy: 0
+rx_crc_errors_phy: 0
+===============================
+dmesg log reports kernel hung but that is after the node got revived the second time:
+[Thu May 25 04:55:58 2023] ext4 filesystem being remounted at /opt/rubrik/deployment/samba/container/chroot/var/run/samba supports timestamps until 2038 (0x7fffffff)
+[Thu May 25 04:55:58 2023] ext4 filesystem being remounted at /opt/rubrik/deployment/samba/container/chroot/run/samba supports timestamps until 2038 (0x7fffffff)
+[Thu May 25 05:06:48 2023] INFO: task tempo:1432792 blocked for more than 120 seconds.
+[Thu May 25 05:06:48 2023] Tainted: P W OE 5.4.0-100-rubrik10-generic #113
+[Thu May 25 05:06:48 2023] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[Thu May 25 05:06:48 2023] tempo D 0 1432792 1379780 0x00004084
+[Thu May 25 05:06:48 2023] Call Trace:
+[Thu May 25 05:06:48 2023] __schedule+0x2e3/0x740
+[Thu May 25 05:06:48 2023] schedule+0x42/0xb0
+[Thu May 25 05:06:48 2023] request_wait_answer+0x12a/0x200
+[Thu May 25 05:06:48 2023] ? __wake_up_pollfree+0x40/0x40
+[Thu May 25 05:06:48 2023] fuse_simple_request+0x185/0x270
+[Thu May 25 05:06:48 2023] fuse_dentry_revalidate+0x138/0x300
+[Thu May 25 05:06:48 2023] lookup_fast+0x281/0x300
+[Thu May 25 05:06:48 2023] walk_component+0x48/0x360
+[Thu May 25 05:06:48 2023] ? link_path_walk.part.0+0x2a2/0x550
+[Thu May 25 05:06:48 2023] path_lookupat.isra.0+0x80/0x230
+[Thu May 25 05:06:48 2023] filename_lookup+0xae/0x170
+[Thu May 25 05:06:48 2023] ? __check_object_size+0x13f/0x150
+[Thu May 25 05:06:48 2023] ? path_get+0x27/0x30
+[Thu May 25 05:06:48 2023] ? __audit_getname+0x96/0xb0
+[Thu May 25 05:06:48 2023] user_path_at_empty+0x3a/0x50
+[Thu May 25 05:06:48 2023] vfs_statx+0x7d/0xe0
+[Thu May 25 05:06:48 2023] __do_sys_newfstatat+0x36/0x70
+[Thu May 25 05:06:48 2023] ? syscall_trace_enter+0x18c/0x2b0
+[Thu May 25 05:06:48 2023] ? __audit_syscall_exit+0x233/0x290
+[Thu May 25 05:06:48 2023] __x64_sys_newfstatat+0x1e/0x20
+[Thu May 25 05:06:48 2023] do_syscall_64+0x57/0x190
+[Thu May 25 05:06:48 2023] entry_SYSCALL_64_after_hwframe+0x44/0xa9
+[Thu May 25 05:06:48 2023] RIP: 0033:0x48216a
+[Thu May 25 05:06:48 2023] Code: 8d 54 24 50 48 89 54 24 10 48 89 4c 24 18 48 c7 44 24 20 20 00 00 00 c6 44 24 28 01 0f 1f 40 00 e8 5b f8 ff ff 48 8b 44 24 30 <48> 89 44 24 48 8b 0d 63 9b 6a 0a 89 4c 24 3c 48 89 04 24 0f 1f 00
+[Thu May 25 05:06:48 2023] RSP: 002b:000000c0009147a0 EFLAGS: 00000202 ORIG_RAX: 0000000000000106
+[Thu May 25 05:06:48 2023] RAX: ffffffffffffffda RBX: 000000c000061800 RCX: 000000000048216a
+[Thu May 25 05:06:48 2023] RDX: 000000c000a82108 RSI: 000000c0008760c0 RDI: ffffffffffffff9c
+[Thu May 25 05:06:48 2023] RBP: 000000c000914830 R08: 0000000000000000 R09: 0000000000000000
+[Thu May 25 05:06:48 2023] R10: 0000000000000100 R11: 0000000000000202 R12: 000000c0008760c0
+[Thu May 25 05:06:48 2023] R13: 0000000000000001 R14: 000000c00044e1a0 R15: ffffffffffffffff
+[Thu May 25 05:06:48 2023] INFO: task tempo:1432796 blocked for more than 120 seconds.
+[Thu May 25 05:06:48 2023] Tainted: P W OE 5.4.0-100-rubrik10-generic #113
+[Thu May 25 05:06:48 2023] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[Thu May 25 05:06:48 2023] tempo D 0 1432796 1379780 0x00004084
+[Thu May 25 05:06:48 2023] Call Trace:
+[Thu May 25 05:06:48 2023] __schedule+0x2e3/0x740
+[Thu May 25 05:06:48 2023] schedule+0x42/0xb0
+========================
+JFL logs shows that is stuck around the time multiple services went down:
+
+2023-05-25T03:10:45.754 WARN 157 jfl.JobInstanceManagerImpl JFL_POTENTIALLY_STUCK_JOB_MARKER {'claimCount': 32, 'jobType': 'PARALLELIZED_PULL_REPLICATE', 'toState': 'ACQUIRING', 'jobId': 'PARALLELIZED_PULL_REPLICATE_4a7484db-d754-4333-95e7-839737791af3', 'type': 'TOO_MANY_TRANSITIONS'}
+2023-05-25T03:10:45.758 INFO 167 common.EventV1Util$ Updated event series 966253f7-8955-4989-be7d-a2acd71db8c8 with EventSeriesStatus Some(Active).
+
+2023-05-25T03:10:47.288 WARN 157 jfl.JobInstanceManagerImpl JFL_POTENTIALLY_STUCK_JOB_MARKER {'claimCount': 32, 'jobType': 'PARALLELIZED_PULL_REPLICATE', 'toState': 'QUEUED', 'jobId': 'PARALLELIZED_PULL_REPLICATE_4a7484db-d754-4333-95e7-839737791af3', 'type': 'TOO_MANY_TRANSITIONS'}
+2023-05-25T03:10:47.319 INFO 157 common.EventV1Util$ Updated event series 7c4a104d-c069-4775-8e11-be44e245
+========================
+health monitor shows multiple services failing:
+2023-05-25T03:14:16.685 ERROR   83      policychecker.Policies$ Sdfs check FAILED
+command: timeout 25 /opt/rubrik/src/scripts/sdfs/verify_sdfs.py || exit 2
+
+stdout: 2023-05-25T03:13:51+0000 INFO <648465.MainThread> [__main__] verify_sdfs_up:54 Verify sdfs is up
+stderr:
+2023-05-25T03:14:16.685 ERROR   83      policychecker.PolicyCheckerTask Ending health monitor task policyChecker-Sdfs: failure (25005 milliseconds). Check Output: Sdfs check FAILED
+command: timeout 25 /opt/rubrik/src/scripts/sdfs/verify_sdfs.py || exit 2
+
+2023-05-25T03:14:57.658 ERROR   83      policychecker.Policies$ MetadataStore check FAILED
+command: /var/lib/rubrik/node-monitor/scripts/check_metadatastore_with_timeout.sh
+
+2023-05-25T03:15:05.089 ERROR   83      policychecker.PolicyCheckerTask Ending health monitor task policyChecker-JflStatus: failure (15176 milliseconds). Check Output: JflStatus check FAILED
+command: /var/lib/rubrik/node-monitor/scripts/check_jfl.sh
+============================
+cockroach shows node liveliness heartbeat error right before the node went bad first time:
+
+2023-05-25T03:45:45.989 WARNING 714     kv/kvserver/liveness/liveness.go:749    failed node liveness heartbeat: operat
+ion "node liveness heartbeat" timed out after 4.501s (given timeout 4.5s): aborted during DistSender.Send: context dea
+dline exceeded
+(1) operation "node liveness heartbeat" timed out after 4.501s (given timeout 4.5s)
+Wraps: (2)
+  | (opaque error wrapper)
+  | type name: github.com/cockroachdb/errors/withstack/*withstack.withStack
+  | reportable 0:
+  |
+  | github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord.(*DistSender).sendToReplicas
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord/dist_sender.go:2306
+  | github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord.(*DistSender).sendPartialBatch
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord/dist_sender.go:1659
+  | github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord.(*DistSender).divideAndSendBatchToRanges
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord/dist_sender.go:1277
+  | github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord.(*DistSender).Send
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord/dist_sender.go:911
+  | github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord.(*txnLockGatekeeper).SendLocked
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord/txn_lock_gatekeeper.go:82
+  | github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord.(*txnMetricRecorder).SendLocked
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord/txn_interceptor_metric_recorder.go:46
+  | github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord.(*txnCommitter).SendLocked
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord/txn_interceptor_committer.go:201
+  | github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord.(*txnSpanRefresher).sendLockedWithRefreshAttempts
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord/txn_interceptor_span_refresher.go:240
+  | github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord.(*txnSpanRefresher).SendLocked
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord/txn_interceptor_span_refresher.go:175
+  | github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord.(*txnPipeliner).SendLocked
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord/txn_interceptor_pipeliner.go:285
+  | github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord.(*txnSeqNumAllocator).SendLocked
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord/txn_interceptor_seq_num_allocator.go:105
+  | github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord.(*txnHeartbeater).SendLocked
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord/txn_interceptor_heartbeater.go:241
+  | github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord.(*TxnCoordSender).Send
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvclient/kvcoord/txn_coord_sender.go:520
+  | github.com/cockroachdb/cockroach/pkg/kv.(*DB).sendUsingSender
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/db.go:894
+  | github.com/cockroachdb/cockroach/pkg/kv.(*Txn).Send
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/txn.go:1038
+  | github.com/cockroachdb/cockroach/pkg/kv.sendAndFill
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/db.go:772
+  | github.com/cockroachdb/cockroach/pkg/kv.(*Txn).Run
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/txn.go:681
+  | github.com/cockroachdb/cockroach/pkg/kv/kvserver/liveness.(*NodeLiveness).updateLivenessAttempt.func1
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvserver/liveness/liveness.go:1340
+  | github.com/cockroachdb/cockroach/pkg/kv.runTxn.func1
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/db.go:858
+  | github.com/cockroachdb/cockroach/pkg/kv.(*Txn).exec
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/txn.go:916
+  | github.com/cockroachdb/cockroach/pkg/kv.runTxn
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/db.go:857
+  | github.com/cockroachdb/cockroach/pkg/kv.(*DB).TxnWithAdmissionControl
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/db.go:839
+  | github.com/cockroachdb/cockroach/pkg/kv.(*DB).Txn
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/db.go:818
+  | github.com/cockroachdb/cockroach/pkg/kv/kvserver/liveness.(*NodeLiveness).updateLivenessAttempt
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvserver/liveness/liveness.go:1313
+  | github.com/cockroachdb/cockroach/pkg/kv/kvserver/liveness.(*NodeLiveness).updateLiveness
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvserver/liveness/liveness.go:1272
+  | github.com/cockroachdb/cockroach/pkg/kv/kvserver/liveness.(*NodeLiveness).heartbeatInternal
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvserver/liveness/liveness.go:922
+  | github.com/cockroachdb/cockroach/pkg/kv/kvserver/liveness.(*NodeLiveness).Start.func1.1
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvserver/liveness/liveness.go:737
+  | github.com/cockroachdb/cockroach/pkg/util/contextutil.RunWithTimeout
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/util/contextutil/context.go:91
+  | github.com/cockroachdb/cockroach/pkg/kv/kvserver/liveness.(*NodeLiveness).Start.func1
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/kv/kvserver/liveness/liveness.go:720
+  | github.com/cockroachdb/cockroach/pkg/util/stop.(*Stopper).RunAsyncTaskEx.func2
+  |     /go/src/github.com/cockroachdb/cockroach/pkg/util/stop/stopper.go:442
+  | runtime.goexit
+  |     /usr/local/go/src/runtime/asm_amd64.s:1371
+Wraps: (3) aborted during DistSender.Send
+Wraps: (4) context deadline exceeded
+Error types: (1) *contextutil.TimeoutError (2) *errbase.opaqueWrapper (3) *errutil.withPrefix (4) context.deadlineExce
+ededError
+
+An inability to maintain liveness will prevent a node from participating in a
+cluster. If this problem persists, it may be a sign of resource starvation or
+of network connectivity problems. For help troubleshooting, visit:
+=======================
+SDFS logs around the time services started going down:
+
+2023-05-25T03:05:56.113 ERROR   37324   metadata_manager.cpp:1724       d74ade3e8e90b9ec,sdfs::unlink,994c2599a299a742,d74ade3e8e90b9ec.journal.0.1vYXN3uwyH Failed BatchedBulkUnlinkByParentUuidAndNames for a batch: -2
+
+2023-05-25T03:11:17.275 ERROR   37325   metadata_manager.cpp:1724       b84afa0c8ea8e294,sdfs::unlink,1342e03fb95a4077,b84afa0c8ea8e294.journal.0.eyFcKXd7wR Failed BatchedBulkUnlinkByParentUuidAndNames for a batch: -2
+2023-05-25T03:11:17.349 INFO    634501  sharded_iterator.h:161  Processing batch (32) with (857) headers
+2023-05-25T03:11:18.276 INFO    37300   chunk_scanner.cpp:64    Scanner.ChunkUndertaker.DiskScanner,/var/lib/rubrik/sdfs RunOnce started
+2023-05-25T03:11:20.270 INFO    37283   cloud_read_cache_util.cpp:140   Empty Staging area, no cloud read cache created
+=======================
+Checked for THP issues also and everything seems fine since no timestamp is getting jumbled or mixed:
+
+"S1BKPIL" rksupport@RVMHM196S005824:~$ cat /sys/kernel/mm/transparent_hugepage/enabled
+always [madvise] never
+
+"S1BKPIL" rksupport@RVMHM196S005824:~$ cat /sys/kernel/mm/transparent_hugepage/defrag
+always defer defer+madvise [madvise] never
+========================
+***************************
+
+
+What is being requested of GET:
+To perform a root cause Analysis of why the node is going down frequently

@@ -18,7 +18,7 @@ function About() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            transition={{ duration: 1.2 }}
+            transition={{ duration: 1 }}
             variants={{
               visible: { opacity: 1, scale: 1, y: 0 },
               hidden: { opacity: 0.2, scale: 0, y: -500 },
@@ -26,7 +26,7 @@ function About() {
           >
             <img
               className="object-cover w-full rounded-lg h-96"
-              src="/tej.jpg"
+              src="/tej1.jpg"
               alt=""
             />
             <h2 className="mt-4 text-xl font-semibold text-gray-800 capitalize dark:text-white">
@@ -41,7 +41,7 @@ function About() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            transition={{ duration: 1.7 }}
+            transition={{ duration: 1.5 }}
             variants={{
               visible: { opacity: 1, scale: 1, y: 0 },
               hidden: { opacity: 0.2, scale: 0, y: -500 },
@@ -56,7 +56,7 @@ function About() {
               Kennith S{" "}
             </h2>
             <p className="mt-2 text-lg tracking-wider text-blue-500 uppercase dark:text-blue-400 ">
-              Front-end Design{" "}
+              Front-end{" "}
             </p>
           </motion.div>
 
@@ -64,7 +64,7 @@ function About() {
           initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            transition={{ duration: 2.2 }}
+            transition={{ duration: 2 }}
             variants={{
               visible: { opacity: 1, scale: 1, y: 0 },
               hidden: { opacity: 0.2, scale: 0, y: -500 },

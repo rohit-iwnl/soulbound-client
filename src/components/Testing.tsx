@@ -7,7 +7,7 @@ export default function Testing({}: Props) {
     <div className="h-screen flex flex-col justify-center items-center snap-center bg-[#121212]">
       <div className="container px-6 py-10 mx-auto">
         <h1 className="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl dark:text-white">
-          explore our <br /> awesome features
+          explore our <br /> features
         </h1>
 
         <div className="mt-2">
@@ -118,8 +118,7 @@ export default function Testing({}: Props) {
           >
             <img
               className="w-[34rem] h-[28rem] flex-shrink-0 object-cover xl:w-[46rem] xl:h-[42rem] rounded-xl"
-src="https://images.unsplash.com/photo-1639322537504-6427a16b0a28?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3732&q=80"         alt=""
-            />
+src="https://images.unsplash.com/photo-1639152201720-5e536d254d81?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3732&q=80"            />
           </motion.div>
         </div>
       </div>

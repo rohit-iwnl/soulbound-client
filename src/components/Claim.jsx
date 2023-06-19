@@ -29,7 +29,6 @@ function Claim() {
 
   const handleSubmit = (e) => {
     const { jsonURI } = studentData;
-    console.log(jsonURI);
     e.preventDefault();
 
     if (!jsonURI) return;
